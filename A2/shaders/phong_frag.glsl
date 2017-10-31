@@ -15,8 +15,16 @@ uniform vec3 diffuseColor;
 uniform vec3 specularColor;
 uniform vec3 lightPos; // Light position
 
-void main() {
-  // Your solution should go here.
-  // Only the ambient colour calculations have been provided as an example.
-  gl_FragColor = vec4(ambientColor, 1.0);
+void main() 
+{
+	// Your solution should go here.
+	// Only the ambient colour calculations have been provided as an example.
+	gl_FragColor = Ka * vec4(ambientColor, 1.0);
+
+	// diffuse shading
+	gl_FragColor = gl_FragColor + Kd * vec4(diffuseColor, 1.0) * max(0.0, dot(normalize(normalInterp), normalize(lightPos)));
+	
+	// specular shading
+	vec3 reflection = reflect(-normalize(lightPos), normalize(normalInterp));
+	gl_FragColor = gl_FragColor + Ks * vec4(specularColor, 1.0) *  pow(max(0.0, dot(normalize(-vertPos), normalize(reflection))), shininessVal);
 }

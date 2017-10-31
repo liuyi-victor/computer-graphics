@@ -8,9 +8,13 @@ varying vec3 normalInterp; // Normal
 varying vec3 vertPos; // Vertex position
 
 
-void main(){
-  // Your solution should go here.
-  // Only the ambient colour calculations have been provided as an example.
-  vec4 vertPos4 = modelview * vec4(position, 1.0);
-  gl_Position = projection * vertPos4;
+void main()
+{
+	// Your solution should go here.
+	// Only the ambient colour calculations have been provided as an example.
+	vec4 vertPos4 = modelview * vec4(position, 1.0);
+	gl_Position = projection * vertPos4;
+
+	vertPos = gl_Position.xyz;
+	normalInterp = normalize(normalMat * modelview * vec4(normal, 1.0)).xyz;
 }
