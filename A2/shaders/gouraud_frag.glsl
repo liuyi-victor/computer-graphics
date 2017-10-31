@@ -5,7 +5,8 @@ varying vec4 color;
 varying vec3 normalInterp; // Normal
 varying vec3 vertPos; // Vertex positon
 
-void main() {
-  // Your solution goes here.
-  gl_FragColor = color;
+void main() 
+{
+	// Your solution goes here.
+	gl_FragColor = color;
 }

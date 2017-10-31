@@ -30,9 +30,18 @@ void main()
 	color = Ka * vec4(ambientColor, 1.0); 
 
 	// diffuse color
-	vec4 normal_view = modelview * vec4(normal, 1.0);
-	color = color + Kd * vec4(diffuseColor, 1.0) * max(0, dot(vec4(normal_view,1.0),vec4(lightPos, 1.0))); 
+	vec4 normal_view = modelview * normalMat * vec4(normal, 1.0);
+	color = color + Kd * vec4(diffuseColor, 1.0) * max(dot(normal_view, vec4(lightPos, 1.0)), 0.0); 
 
 	// specular color
-	color = color + Ks * vec4(specularColor, 1.0) * pow(       max(0,            dot(        reflect(vec4(lightPos, 1.0), vec4(normalize(normal),1.0)),   )            ,         shininessVal); 
+	vec4 reflection = reflect(-normalize(vec4(lightPos, 1.0)), normalize(normal_view));
+	// reflect(vec4(lightPos, 1.0), vec4(normalize(normal),1.0))
+	vec4 view;
+	view = -vertPos4;
+	//view.w = 1.0;
+	color = color + Ks * vec4(specularColor, 1.0) * pow(       max( dot(reflection, view),  0.0  )          ,         shininessVal); 
+
+	vertPos = gl_Position.xyw;
+	//normalInterp = normalize(normalMat * vec4(normal, 1.0)).xyw;
+	normalInterp = normalize(normal_view).xyw;
 }
