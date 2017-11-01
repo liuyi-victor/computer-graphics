@@ -16,5 +16,5 @@ void main()
 	gl_Position = projection * vertPos4;
 
 	vertPos = gl_Position.xyz;
-	normalInterp = normalize(normalMat * modelview * vec4(normal, 1.0)).xyz;
+	normalInterp = (normalMat * vec4(normal, 0.0)).xyz;
 }

@@ -22,9 +22,10 @@ void main()
 	gl_FragColor = Ka * vec4(ambientColor, 1.0);
 
 	// diffuse shading
-	gl_FragColor = gl_FragColor + Kd * vec4(diffuseColor, 1.0) * max(0.0, dot(normalize(normalInterp), normalize(lightPos)));
+	vec lightDirection = lightPos - vertPos;
+	gl_FragColor = gl_FragColor + Kd * vec4(diffuseColor, 1.0) * max(0.0, dot(normalize(normalInterp), normalize(lightDirection)));
 	
 	// specular shading
-	vec3 reflection = reflect(-normalize(lightPos), normalize(normalInterp));
+	vec3 reflection = reflect(-lightDirection, normalize(normalInterp));
 	gl_FragColor = gl_FragColor + Ks * vec4(specularColor, 1.0) *  pow(max(0.0, dot(normalize(-vertPos), normalize(reflection))), shininessVal);
 }
