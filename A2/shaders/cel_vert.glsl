@@ -7,8 +7,12 @@ uniform mat4 projection, modelview, normalMat; // Given scene transformation mat
 varying vec3 normalInterp;
 varying vec3 vertPos;
 
-void main() {
-  // Your solution should go here.
-  vec4 vertPos4 = modelview * vec4(position, 1.0);
-  gl_Position = projection * vertPos4;
+void main() 
+{
+	// Your solution should go here.
+	vec4 vertPos4 = modelview * vec4(position, 1.0);
+	gl_Position = projection * vertPos4;
+
+	vertPos = vertPos4.xyz;
+	normalInterp = (normalMat * vec4(normal, 0.0)).xyz;
 }

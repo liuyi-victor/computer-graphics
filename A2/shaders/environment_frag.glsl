@@ -18,9 +18,20 @@ uniform vec3 lightPos; // Light position
 
 uniform samplerCube envTexSampler; // A GLSL sampler represents a single texture. A samplerCube can be used to sample a cubemap texture.
 
-void main() {
-  // Your solution should go here.
-  
-  // The model is currently rendered in black
-  gl_FragColor = vec4(vec3(0.0), 1.0);
+void main() 
+{
+	/* use environment map as the ambient color:
+		1. determine the reflection of the view vector at a point of the surface (similar to ray tracing)
+		2. determine the intersection of this reflected ray with the environment cube using textureCube()
+	*/
+	vec3 reflectedDirection = reflect(viewVec, normalize(normalInterp));
+	gl_FragColor = textureCube(envTexSampler, reflectedDirection);
+
+	// diffuse shading
+	vec3 lightDirection = lightPos - vertPos;
+	gl_FragColor = gl_FragColor + Kd * vec4(diffuseColor, 1.0) * max(0.0, dot(normalize(normalInterp), normalize(lightDirection)));
+	
+	// specular shading
+	vec3 reflection = 2.0*dot(normalize(normalInterp), lightDirection)*normalize(normalInterp) - lightDirection;
+	gl_FragColor = gl_FragColor + Ks * vec4(specularColor, 1.0) *  pow(max(0.0, dot(normalize(-vertPos), normalize(reflection))), shininessVal);
 }

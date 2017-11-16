@@ -15,8 +15,9 @@ uniform vec3 lightPos; // Light position
 
 // HINT: Use the built-in variable gl_FragCoord to get the screen-space coordinates
 
-void main() {
-  // Your solution should go here.
-  // Only the background color calculations have been provided as an example.
-  gl_FragColor = vec4(diffuseColor, 1.0);
+void main() 
+{
+	// Your solution should go here.
+	// Only the background color calculations have been provided as an example.
+	gl_FragColor = Kd * vec4(diffuseColor, 1.0);
 }

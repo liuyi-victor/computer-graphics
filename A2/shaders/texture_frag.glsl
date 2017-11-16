@@ -6,8 +6,10 @@ varying highp vec2 texCoordInterp;
 // uniform values are the same across the scene
 uniform sampler2D uSampler;	// A GLSL sampler represents a single texture. A sampler2D can be used to sample a 2D texture.
 
-void main() {
-  // Your solution should go here.
-  // The model is currently rendered in black
-  gl_FragColor = vec4(vec3(0.0), 1.0);
+void main() 
+{
+	highp vec2 comple = vec2(texCoordInterp.x, 1.0 - texCoordInterp.y);	// makes the inverted global upright
+
+	// use texture2D to determine the color of the pixels based on the interpolated texture coordinates
+	gl_FragColor = texture2D(uSampler, comple);				
 }

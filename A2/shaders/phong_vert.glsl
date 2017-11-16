@@ -5,7 +5,7 @@ uniform mat4 projection, modelview, normalMat; // Given scene transformation mat
 
 // These will be given to the fragment shader and interpolated automatically
 varying vec3 normalInterp; // Normal
-varying vec3 vertPos; // Vertex position
+varying vec3 vertPos; // Vertex position (world coordinates)
 
 
 void main()
@@ -15,6 +15,6 @@ void main()
 	vec4 vertPos4 = modelview * vec4(position, 1.0);
 	gl_Position = projection * vertPos4;
 
-	vertPos = gl_Position.xyz;
+	vertPos = vertPos4.xyz;
 	normalInterp = (normalMat * vec4(normal, 0.0)).xyz;
 }

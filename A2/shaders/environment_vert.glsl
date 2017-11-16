@@ -9,8 +9,13 @@ varying vec3 normalInterp; // Normal
 varying vec3 vertPos; // Vertex position
 varying vec3 viewVec; // Vector from the eye to the vertex
 
-void main() {
-  // Your solution should go here.
-  vec4 vertPos4 = modelview * vec4(position, 1.0);
-  gl_Position = projection * vertPos4;
+void main() 
+{
+	// Your solution should go here.
+	vec4 vertPos4 = modelview * vec4(position, 1.0);
+	gl_Position = projection * vertPos4;
+
+	normalInterp = (normalMat * vec4(normal, 0.0)).xyz;
+	vertPos = vertPos4.xyz;
+	viewVec = vertPos4.xyz;
 }

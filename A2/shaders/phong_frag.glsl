@@ -22,10 +22,10 @@ void main()
 	gl_FragColor = Ka * vec4(ambientColor, 1.0);
 
 	// diffuse shading
-	vec lightDirection = lightPos - vertPos;
+	vec3 lightDirection = lightPos - vertPos;		// light direction which points from surface point to the light source
 	gl_FragColor = gl_FragColor + Kd * vec4(diffuseColor, 1.0) * max(0.0, dot(normalize(normalInterp), normalize(lightDirection)));
 	
 	// specular shading
-	vec3 reflection = reflect(-lightDirection, normalize(normalInterp));
+	vec3 reflection = 2.0*dot(normalize(normalInterp), lightDirection)*normalize(normalInterp) - lightDirection;		// determine the reflection direction
 	gl_FragColor = gl_FragColor + Ks * vec4(specularColor, 1.0) *  pow(max(0.0, dot(normalize(-vertPos), normalize(reflection))), shininessVal);
 }

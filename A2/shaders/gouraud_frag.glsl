@@ -7,6 +7,6 @@ varying vec3 vertPos; // Vertex positon
 
 void main() 
 {
-	// Your solution goes here.
+	// simply assign the interpolated color to the pixels
 	gl_FragColor = color;
 }

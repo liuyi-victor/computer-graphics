@@ -30,22 +30,17 @@ void main()
 	color = Ka * vec4(ambientColor, 1.0); 
 
 	// diffuse color
-	vec4 normal_view = normalMat * vec4(normal, 0.0);
-	color = color + Kd * vec4(diffuseColor, 1.0) * max(dot(normal_view, vec4(lightPos, 1.0)), 0.0); 
+	vec4 lightDirection = vec4(lightPos, 1.0) - vertPos4;		// light direction which points from surface point to the light source
+	vec4 normal_view = normalize(normalMat * vec4(normal, 0.0));	// normalized normal direction vector in view coordinates
+	color = color + Kd * vec4(diffuseColor, 1.0) * max(dot(normal_view, normalize(lightDirection)), 0.0); 
 
 	// specular color
-	vec4 lightDirection = vec4(lightPos, 1.0) - vertPos4;
-	if(dot(normal_view, lightDirection) > 0.0)
-	{
-		//float normal_proj = -dot(normal_view, modelview * vec4(lightPos, 1.0));
-		//vec4 reflection = -normal_proj * normalize(normal_view) + (modelview * vec4(lightPos, 1.0) + normal_proj * normalize(normal_view));
-		vec4 reflection = reflect(-lightDirection, normal_view);
-		// reflect(vec4(lightPos, 1.0), vec4(normalize(normal),1.0))	reflect(vec4(-normalize(lightPos), 0.0), normalize(normal_view));
-		vec4 view = -vertPos4;
-		color = color + Ks * vec4(specularColor, 1.0) * pow(max( dot(reflection, view),0.0 ), shininessVal); 
-	}
+	vec4 reflection = 2.0*dot(normal_view, lightDirection)*normal_view - lightDirection;
+
+	// view directional vector in view coordinate space
+	vec4 view = -vec4(vertPos4.xyz, 0.0);
+	color = color + Ks * vec4(specularColor, 1.0) * pow(max( dot(reflection, view),0.0 ), shininessVal); 
 
 	vertPos = vertPos4.xyz;
-	//normalInterp = normalize(normalMat * vec4(normal, 1.0)).xyw;
-	normalInterp = normalize(normal_view).xyz;
+	normalInterp = normal_view.xyz;
 }

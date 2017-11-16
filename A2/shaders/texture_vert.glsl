@@ -8,8 +8,13 @@ varying vec3 normalInterp;
 varying vec3 vertPos;
 varying highp vec2 texCoordInterp;
 
-void main() {
-  // Your solution should go here.
-  vec4 vertPos4 = modelview * vec4(position, 1.0);
-  gl_Position = projection * vertPos4;
+void main() 
+{
+	// Your solution should go here.
+	vec4 vertPos4 = modelview * vec4(position, 1.0);
+	gl_Position = projection * vertPos4;
+	
+	vertPos = vertPos4.xyz;
+	normalInterp = (normalMat * vec4(normal, 0.0)).xyz;
+	texCoordInterp = texCoord;
 }

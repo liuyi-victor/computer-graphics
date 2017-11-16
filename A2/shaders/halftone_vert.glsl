@@ -9,7 +9,10 @@ varying vec3 vertPos; // Vertex position
 
 void main()
 {
-  // Your solution should go here.
-  vec4 vertPos4 = modelview * vec4(position, 1.0);
-  gl_Position = projection * vertPos4;
+	// Your solution should go here.
+	vec4 vertPos4 = modelview * vec4(position, 1.0);
+	gl_Position = projection * vertPos4;
+
+	normalInterp = (normalMat * vec4(normal, 0.0)).xyz;
+	vertPos = vertPos4.xyz;
 }
