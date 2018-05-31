@@ -284,7 +284,7 @@ function Renderer(canvasName, vertSrc, fragSrc)
     vertexLoc = gl.getAttribLocation(progID,   "position");
     texCoordLoc =  gl.getAttribLocation(progID, "texCoord");
     normalLoc = gl.getAttribLocation(progID,   "normal");
-	worldPositionLoc = gl.getAttribLocation(progID, "worldPositionLoc");
+	worldPositionLoc = gl.getAttribLocation(progID, "worldPosition");
 
     // retrieve the location of the UNIFORM variables of the shader
     projectionLoc = gl.getUniformLocation(progID, "projection");
